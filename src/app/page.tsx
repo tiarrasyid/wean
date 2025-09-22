@@ -20,18 +20,21 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="bg-[#111827] text-white h-full rounded-lg mx-8 my-8 p-10 flex flex-col md:flex-row items-center justify-between gap-10">
+      <section className="bg-gradient-to-r from-[#111827] via-[#152039] to-[#1E293B] text-white rounded-2xl mx-6 my-10 px-8 md:px-16 py-16 flex flex-col md:flex-row items-center justify-between gap-12 shadow-lg">
+        {/* Left Text */}
         <div className="flex-1">
-          <h1 className="text-2xl md:text-3xl font-bold mb-4">
-            Wean - Analyze Your Website, Instantly.
+          <h1 className="text-3xl md:text-3xl font-bold mb-6 leading-snug">
+            Wean – Analyze Your Website Instantly 🚀
           </h1>
-          <p className="text-gray-300 mb-6">
-            Wean delivers instant website analysis with precision and clarity.
-            It ensures clean, efficient, and reliable code for every project.
+          <p className="text-gray-300 text-lg mb-8">
+            Get instant, AI-powered insights to ensure your code stays clean,
+            efficient, and reliable. Perfect for developers and businesses that
+            value speed and quality.
           </p>
 
-          <div className="flex gap-2">
-            <div className="flex items-center bg-[#F5F5F0] rounded-md px-3 py-2 flex-1">
+          {/* Input + Button */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex items-center bg-white rounded-md px-3 py-2 flex-1 shadow focus-within:ring-2 focus-within:ring-blue-600">
               <button
                 type="button"
                 onClick={handleFileClick}
@@ -58,66 +61,77 @@ export default function Home() {
                 }}
               />
             </div>
-            <button className="bg-[#F2F1EC] text-black px-4 py-2 rounded-md font-medium hover:bg-gray-200">
+
+            <button className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-md font-semibold shadow-md transition">
               Analyze Now
             </button>
           </div>
         </div>
 
+        {/* Right Illustration */}
         <div className="flex-1 flex justify-center">
           <Image
             src="/assets/analyze.svg"
-            alt="Illustration"
-            width={350}
-            height={250}
+            alt="Website Analysis Illustration"
+            width={400}
+            height={300}
+            className="drop-shadow-xl"
           />
         </div>
       </section>
 
       {/* Features */}
-      <section className="px-17 py-16 text-left">
-        <h2 className="text-2xl font-semibold mb-12 text-black">Features</h2>
-        <div className="grid md:grid-cols-3 gap-12">
-          <div>
+      <section className="px-8 md:px-16 py-20 text-left">
+        <h2 className="text-3xl font-semibold mb-12 text-center text-gray-900">
+          Powerful Features, Made for Developers
+        </h2>
+        <div className="grid md:grid-cols-3 gap-10">
+          {/* Feature Card */}
+          <div className="bg-white shadow-md rounded-xl p-8 hover:shadow-xl transition transform hover:-translate-y-1">
             <Image
               src="/assets/codeanalysis.svg"
               alt="Code Analysis"
-              width={200}
-              height={200}
-              className="h-36 w-auto mb-4"
+              width={120}
+              height={120}
+              className="mx-auto mb-6"
             />
-            <h3 className=" font-medium mb-2 text-black">Code Analysis</h3>
-            <p className="text-black">
-              Identify potential issues and optimize your code efficiently with
-              our advanced tools.
+            <h3 className="text-xl font-semibold text-center text-gray-900 mb-3">
+              Code Analysis
+            </h3>
+            <p className="text-gray-600 text-center">
+              Identify issues early and optimize your code with precision.
             </p>
           </div>
-          <div>
+
+          <div className="bg-white shadow-md rounded-xl p-8 hover:shadow-xl transition transform hover:-translate-y-1">
             <Image
               src="/assets/automation.svg"
               alt="Automation"
-              width={200}
-              height={200}
-              className="h-36 w-auto mb-4"
+              width={120}
+              height={120}
+              className="mx-auto mb-6"
             />
-            <h3 className="font-medium mb-2 text-black">Automation</h3>
-            <p className="text-black">
-              Automate repetitive tasks and focus on what matters most: writing
-              quality code.
+            <h3 className="text-xl font-semibold text-center text-gray-900 mb-3">
+              Automation
+            </h3>
+            <p className="text-gray-600 text-center">
+              Automate repetitive tasks and focus on what really matters.
             </p>
           </div>
-          <div>
+
+          <div className="bg-white shadow-md rounded-xl p-8 hover:shadow-xl transition transform hover:-translate-y-1">
             <Image
               src="/assets/progresstrack.svg"
               alt="Progress Tracking"
-              width={200}
-              height={200}
-              className="h-36 w-auto mb-4"
+              width={120}
+              height={120}
+              className="mx-auto mb-6"
             />
-            <h3 className="font-medium mb-2 text-black">Progress Tracking</h3>
-            <p className="text-black">
-              Track your improvements and celebrate milestones with detailed
-              reports.
+            <h3 className="text-xl font-semibold text-center text-gray-900 mb-3">
+              Progress Tracking
+            </h3>
+            <p className="text-gray-600 text-center">
+              Monitor your progress and celebrate milestones with ease.
             </p>
           </div>
         </div>
