@@ -1,13 +1,12 @@
 "use client";
-
 import Link from "next/link";
 
 export default function Footer() {
   return (
     <footer className="bg-[#152039] text-white py-7 mt-10">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-sm">
-        <p className="mb-2 md:mb-0">© 2025 All Rights Reserved</p>
-        <div className="flex space-x-6">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4 px-6 text-sm">
+        <p className="text-center md:text-left">© 2025 All Rights Reserved</p>
+        <div className="flex flex-wrap justify-center md:justify-end gap-4">
           <Link href="/privacy-policy" className="hover:underline">
             Privacy Policy
           </Link>
