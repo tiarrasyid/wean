@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation"; // ✅ untuk ambil query param
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { Activity, BarChart3, Clock, Package } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 
-function Page() {
+function PageContent() {
   const { user } = useUser();
   const searchParams = useSearchParams();
   const planFromQuery = searchParams.get("plan"); // Ambil plan dari URL
@@ -119,4 +119,10 @@ function Page() {
   );
 }
 
-export default Page;
+export default function Page() {
+  return (
+    <Suspense>
+      <PageContent />
+    </Suspense>
+  );
+}

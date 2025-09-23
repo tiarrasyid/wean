@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { useUser } from "@clerk/nextjs";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Mail, Package, PackageCheck, ShieldCheck } from "lucide-react";
 
-function Page() {
+function PageContent() {
   const { user } = useUser();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -144,4 +144,10 @@ function Page() {
   );
 }
 
-export default Page;
+export default function Page() {
+  return (
+    <Suspense>
+      <PageContent />
+    </Suspense>
+  );
+}
