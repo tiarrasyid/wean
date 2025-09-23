@@ -1,11 +1,21 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 
 function Page() {
   const router = useRouter();
+  const { isSignedIn } = useUser();
+
+  const handleChoosePlan = (planName: string) => {
+    if (!isSignedIn) {
+      router.push("/sign-in?redirect_url=/pricing");
+    } else {
+      router.push(`/confirm-plan?plan=${planName}`);
+    }
+  };
 
   const plans = [
     {
@@ -99,7 +109,7 @@ function Page() {
 
                 {/* Button ke Dashboard */}
                 <button
-                  onClick={() => router.push("/dashboard")}
+                  onClick={() => handleChoosePlan(plan.name)}
                   className={`${plan.buttonColor} text-white font-medium px-4 py-2 rounded-md w-full shadow`}
                 >
                   {plan.name === "Wean Free" ? "Start" : "Start"}

@@ -1,12 +1,22 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation"; // ✅ untuk ambil query param
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { Activity, BarChart3, Clock, Package } from "lucide-react";
-import { useUser } from "@clerk/nextjs"; // ✅ ambil user dari Clerk
+import { useUser } from "@clerk/nextjs";
 
 function Page() {
-  const { user } = useUser(); // ✅ user info (nama, email, dsb)
+  const { user } = useUser();
+  const searchParams = useSearchParams();
+  const planFromQuery = searchParams.get("plan"); // Ambil plan dari URL
+  const [activePlan, setActivePlan] = useState("-"); // default jika tidak ada query
+
+  useEffect(() => {
+    if (planFromQuery) {
+      setActivePlan(planFromQuery);
+    }
+  }, [planFromQuery]);
 
   const stats = [
     {
@@ -16,7 +26,7 @@ function Page() {
     },
     {
       title: "Active Package",
-      value: "Wean Pro",
+      value: activePlan,
       icon: <Package className="w-6 h-6" />,
     },
     {
@@ -36,7 +46,6 @@ function Page() {
     <div className="bg-[#F3F4F6] min-h-screen flex flex-col font-sans">
       <Navbar />
 
-      {/* Main Content */}
       <main className="flex-grow container mx-auto px-6 py-10 space-y-10">
         {/* Welcome */}
         <div>

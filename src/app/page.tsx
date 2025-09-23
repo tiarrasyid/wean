@@ -38,7 +38,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={handleFileClick}
-                className="mr-2 text-[#111C3A] hover:text-[#0d152e]"
+                className="mr-2 text-[#152039]"
               >
                 <Upload size={20} />
               </button>
@@ -46,7 +46,7 @@ export default function Home() {
               <input
                 type="text"
                 placeholder="Enter your website URL"
-                className="bg-transparent flex-1 outline-none text-[#111C3A] placeholder-gray-500"
+                className="bg-transparent flex-1 outline-none text-[#152039] placeholder-gray-500"
               />
 
               {/* Hidden File Input */}
@@ -62,7 +62,7 @@ export default function Home() {
               />
             </div>
 
-            <button className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-md font-semibold shadow-md transition">
+            <button className="bg-[#F2F1EC] text-[#152039] px-6 py-3 rounded-md font-semibold shadow-md transition">
               Analyze Now
             </button>
           </div>

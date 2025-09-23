@@ -19,19 +19,25 @@ const Navbar = () => {
         <Link href="/history" className="text-black hover:underline">
           History
         </Link>
-        <Link href="/pricing" className="text-black hover:underline">
-          Pricing
-        </Link>
 
-        {/* Auth Section */}
         {isSignedIn ? (
-          <UserButton afterSignOutUrl="/" />
+          <>
+            <Link href="/dashboard" className="text-black hover:underline">
+              Dashboard
+            </Link>
+            <UserButton afterSignOutUrl="/" />
+          </>
         ) : (
-          <SignInButton mode="modal">
-            <button className="bg-[#152039] text-white px-4 py-2 rounded hover:bg-[#1e2a4a] transition">
-              Sign In
-            </button>
-          </SignInButton>
+          <>
+            <Link href="/pricing" className="text-black hover:underline">
+              Pricing
+            </Link>
+            <SignInButton mode="modal">
+              <button className="bg-[#152039] text-white px-4 py-2 rounded hover:bg-[#1e2a4a] transition">
+                Sign In
+              </button>
+            </SignInButton>
+          </>
         )}
       </div>
     </nav>
