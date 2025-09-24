@@ -17,7 +17,7 @@ function PageContent() {
       setActivePlan(planFromQuery);
     }
   }, [planFromQuery]);
-
+  
   const stats = [
     {
       title: "Total Scans",

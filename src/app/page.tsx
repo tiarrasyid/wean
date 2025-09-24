@@ -20,20 +20,20 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#111827] via-[#152039] to-[#1E293B] text-white rounded-2xl mx-6 my-10 px-8 md:px-16 py-16 flex flex-col md:flex-row items-center justify-between gap-12 shadow-lg">
+      <section className="bg-gradient-to-r from-[#111827] via-[#152039] to-[#1E293B] text-white rounded-2xl mx-4 md:mx-6 my-8 md:my-10 px-6 md:px-16 py-12 md:py-16 flex flex-col md:flex-row items-center justify-between gap-10 md:gap-12 shadow-lg">
         {/* Left Text */}
-        <div className="flex-1">
-          <h1 className="text-3xl md:text-3xl font-bold mb-6 leading-snug">
+        <div className="flex-1 text-center md:text-left">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 leading-snug">
             Wean – Analyze Your Website Instantly 🚀
           </h1>
-          <p className="text-gray-300 text-lg mb-8">
+          <p className="text-gray-300 text-base sm:text-lg mb-6 md:mb-8">
             Get instant, AI-powered insights to ensure your code stays clean,
             efficient, and reliable. Perfect for developers and businesses that
             value speed and quality.
           </p>
 
           {/* Input + Button */}
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xl mx-auto md:mx-0">
             <div className="flex items-center bg-white rounded-md px-3 py-2 flex-1 shadow focus-within:ring-2 focus-within:ring-blue-600">
               <button
                 type="button"
@@ -46,7 +46,7 @@ export default function Home() {
               <input
                 type="text"
                 placeholder="Enter your website URL"
-                className="bg-transparent flex-1 outline-none text-[#152039] placeholder-gray-500"
+                className="bg-transparent flex-1 outline-none text-[#152039] placeholder-gray-500 text-sm sm:text-base"
               />
 
               {/* Hidden File Input */}
@@ -62,20 +62,20 @@ export default function Home() {
               />
             </div>
 
-            <button className="bg-[#F2F1EC] text-[#152039] px-6 py-3 rounded-md font-semibold shadow-md transition">
+            <button className="bg-[#F2F1EC] text-[#152039] px-5 sm:px-6 py-2.5 sm:py-3 rounded-md font-semibold shadow-md transition hover:bg-[#e0dfd9]">
               Analyze Now
             </button>
           </div>
         </div>
 
         {/* Right Illustration */}
-        <div className="flex-1 flex justify-center">
+        <div className="flex-1 flex justify-center mt-8 md:mt-0">
           <Image
             src="/assets/analyze.svg"
             alt="Website Analysis Illustration"
-            width={400}
-            height={300}
-            className="drop-shadow-xl"
+            width={350}
+            height={280}
+            className="drop-shadow-xl w-64 sm:w-80 md:w-[400px] h-auto"
           />
         </div>
       </section>
