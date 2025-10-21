@@ -2,15 +2,60 @@
 import Image from "next/image";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { Upload } from "lucide-react";
-import { useRef } from "react";
+import { Upload, AlertCircle } from "lucide-react";
+import { useRef, useState, FormEvent } from "react";
+import { useRouter } from 'next/navigation'; // Import from 'next/navigation'
 
 export default function Home() {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  // --- New State ---
+  const [url, setUrl] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const router = useRouter();
 
   const handleFileClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
+    }
+  };
+
+  // --- New Submit Handler ---
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    if (!url) {
+      setError('Please enter a website URL.');
+      setIsLoading(false);
+      return;
+    }
+    
+    try {
+      // Call your Python API
+      const response = await fetch('http://127.0.0.1:5000/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Something went wrong on the server.');
+      }
+      
+      // 1. Save the analysis data to session storage
+      sessionStorage.setItem('analysisData', JSON.stringify(data));
+      
+      // 2. Navigate to the clean /results URL
+      router.push('/results');
+
+    } catch (err: any) {
+      setError(err.message);
+      setIsLoading(false);
     }
   };
 
@@ -32,8 +77,8 @@ export default function Home() {
             value speed and quality.
           </p>
 
-          {/* Input + Button */}
-          <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xl mx-auto md:mx-0">
+          {/* --- Modified Form --- */}
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-xl mx-auto md:mx-0">
             <div className="flex items-center bg-white rounded-md px-3 py-2 flex-1 shadow focus-within:ring-2 focus-within:ring-blue-600">
               <button
                 type="button"
@@ -45,6 +90,9 @@ export default function Home() {
 
               <input
                 type="text"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                disabled={isLoading}
                 placeholder="Enter your website URL"
                 className="bg-transparent flex-1 outline-none text-[#152039] placeholder-gray-500 text-sm sm:text-base"
               />
@@ -57,15 +105,29 @@ export default function Home() {
                 onChange={(e) => {
                   if (e.target.files && e.target.files.length > 0) {
                     console.log("File uploaded:", e.target.files[0].name);
+                    // You could add file processing logic here later
                   }
                 }}
               />
             </div>
 
-            <button className="bg-[#F2F1EC] text-[#152039] px-5 sm:px-6 py-2.5 sm:py-3 rounded-md font-semibold shadow-md transition hover:bg-[#e0dfd9]">
-              Analyze Now
+            <button 
+              type="submit"
+              disabled={isLoading}
+              className="bg-[#F2F1EC] text-[#152039] px-5 sm:px-6 py-2.5 sm:py-3 rounded-md font-semibold shadow-md transition hover:bg-[#e0dfd9] disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {isLoading ? 'Analyzing...' : 'Analyze Now'}
             </button>
-          </div>
+          </form>
+          {/* --- End Modified Form --- */}
+          
+          {/* --- New Error Message --- */}
+          {error && (
+            <div className="mt-4 flex items-center gap-2 text-red-300 p-2 bg-red-900/30 rounded-md max-w-xl mx-auto md:mx-0">
+              <AlertCircle size={18} />
+              <p className="text-sm">{error}</p>
+            </div>
+          )}
         </div>
 
         {/* Right Illustration */}
@@ -82,6 +144,7 @@ export default function Home() {
 
       {/* Features */}
       <section className="px-8 md:px-16 py-20 text-left">
+        {/* ... (rest of your page is unchanged) ... */}
         <h2 className="text-3xl font-semibold mb-12 text-center text-gray-900">
           Powerful Features, Made for Developers
         </h2>
