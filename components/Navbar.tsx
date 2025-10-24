@@ -66,14 +66,20 @@ const Navbar = () => {
 
           {isSignedIn ? (
             <>
-              <Link href="/dashboard" className="block text-black hover:underline">
+              <Link
+                href="/dashboard"
+                className="block text-black hover:underline"
+              >
                 Dashboard
               </Link>
               <UserButton afterSignOutUrl="/" />
             </>
           ) : (
             <>
-              <Link href="/pricing" className="block text-black hover:underline">
+              <Link
+                href="/pricing"
+                className="block text-black hover:underline"
+              >
                 Pricing
               </Link>
               <SignInButton mode="modal">

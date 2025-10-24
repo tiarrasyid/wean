@@ -4,15 +4,15 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { Upload, AlertCircle } from "lucide-react";
 import { useRef, useState, FormEvent } from "react";
-import { useRouter } from 'next/navigation'; // Import from 'next/navigation'
+import { useRouter } from "next/navigation"; // Import from 'next/navigation'
 
 export default function Home() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   // --- New State ---
-  const [url, setUrl] = useState<string>('');
+  const [url, setUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const router = useRouter();
 
   const handleFileClick = () => {
@@ -25,34 +25,33 @@ export default function Home() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
     if (!url) {
-      setError('Please enter a website URL.');
+      setError("Please enter a website URL.");
       setIsLoading(false);
       return;
     }
-    
+
     try {
       // Call your Python API
-      const response = await fetch('http://127.0.0.1:5000/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://127.0.0.1:5000/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Something went wrong on the server.');
+        throw new Error(data.error || "Something went wrong on the server.");
       }
-      
-      // 1. Save the analysis data to session storage
-      sessionStorage.setItem('analysisData', JSON.stringify(data));
-      
-      // 2. Navigate to the clean /results URL
-      router.push('/results');
 
+      // 1. Save the analysis data to session storage
+      sessionStorage.setItem("analysisData", JSON.stringify(data));
+
+      // 2. Navigate to the clean /results URL
+      router.push("/results");
     } catch (err: any) {
       setError(err.message);
       setIsLoading(false);
@@ -65,8 +64,7 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#111827] via-[#152039] to-[#1E293B] text-white rounded-2xl mx-4 md:mx-6 my-8 md:my-10 px-6 md:px-16 py-12 md:py-16 flex flex-col md:flex-row items-center justify-between gap-10 md:gap-12 shadow-lg">
-        {/* Left Text */}
+      <section className="bg-gradient-to-r from-[#111827] via-[#152039] to-[#1E293B] text-white rounded-2xl mx-4 md:mx-6 my-8 md:my-10 px-6 md:px-16 py-20 md:py-32 flex flex-col md:flex-row items-center justify-between gap-10 md:gap-12 shadow-lg min-h-[80vh]">
         <div className="flex-1 text-center md:text-left">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 leading-snug">
             Wean – Analyze Your Website Instantly 🚀
@@ -78,7 +76,10 @@ export default function Home() {
           </p>
 
           {/* --- Modified Form --- */}
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-xl mx-auto md:mx-0">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col sm:flex-row gap-3 w-full max-w-xl mx-auto md:mx-0"
+          >
             <div className="flex items-center bg-white rounded-md px-3 py-2 flex-1 shadow focus-within:ring-2 focus-within:ring-blue-600">
               <button
                 type="button"
@@ -111,16 +112,16 @@ export default function Home() {
               />
             </div>
 
-            <button 
+            <button
               type="submit"
               disabled={isLoading}
               className="bg-[#F2F1EC] text-[#152039] px-5 sm:px-6 py-2.5 sm:py-3 rounded-md font-semibold shadow-md transition hover:bg-[#e0dfd9] disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Analyzing...' : 'Analyze Now'}
+              {isLoading ? "Analyzing..." : "Analyze Now"}
             </button>
           </form>
           {/* --- End Modified Form --- */}
-          
+
           {/* --- New Error Message --- */}
           {error && (
             <div className="mt-4 flex items-center gap-2 text-red-300 p-2 bg-red-900/30 rounded-md max-w-xl mx-auto md:mx-0">
