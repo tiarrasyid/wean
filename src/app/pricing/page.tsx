@@ -1,3 +1,4 @@
+// pricing/page.tsx
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
@@ -10,8 +11,16 @@ function Page() {
   const { isSignedIn } = useUser();
 
   const handleChoosePlan = (planName: string) => {
+    if (planName === "Wean Free") {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("wean_active_plan", "Wean Free");
+      }
+      router.push("/dashboard");
+      return;
+    }
+
     if (!isSignedIn) {
-      router.push("/sign-in?redirect_url=/pricing");
+      router.push(`/sign-in?redirect_url=/confirm-plan?plan=${planName}`);
     } else {
       router.push(`/confirm-plan?plan=${planName}`);
     }
@@ -24,11 +33,7 @@ function Page() {
         "Start with the essentials. Perfect for beginners who want quick scans and basic insights. Upgrade anytime as your needs grow.",
       price: "Rp0",
       note: "/month for one person",
-      benefits: [
-        "Limited scans (10/month)",
-        "Basic analytics",
-        "Standard support",
-      ],
+      benefits: ["Limited scans", "Basic analytics", "Standard support"],
       buttonColor: "bg-gray-600 hover:bg-gray-700",
       highlight: false,
     },
@@ -50,7 +55,7 @@ function Page() {
     {
       name: "Wean Enterprise",
       description:
-        "Priority support, faster processing, and tailored solutions. Perfect for companies that need reliability and scale.",
+        "Custom solutions for Software Houses & Digital Agencies. Note: Currently restricted for High-Compliance sectors (e.g., Banking/Fintech).",
       price: "Contact Us",
       note: "Contact us for more details",
       benefits: [
@@ -67,18 +72,14 @@ function Page() {
   return (
     <div className="bg-[#F3F4F6] min-h-screen flex flex-col font-sans">
       <Navbar />
-
-      {/* Main Content */}
       <main className="flex-grow container mx-auto px-6 py-12 text-center">
-        <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-4">
-          Instant Website Analysis, Flexible Plans for Every Need
+        <h1 className="text-3xl font-semibold text-gray-900 mb-4">
+          Instant Website Analysis, Flexible Plans
         </h1>
         <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
-          Start free, upgrade when you’re ready, and keep your code clean
-          without breaking the bank.
+          Choose the plan that fits your development needs.
         </p>
 
-        {/* Pricing Plans */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {plans.map((plan, index) => (
             <div
@@ -92,7 +93,6 @@ function Page() {
                   Recommended
                 </span>
               )}
-
               <div>
                 <h2 className="text-xl font-semibold mb-2 text-black text-left">
                   {plan.name}
@@ -106,16 +106,13 @@ function Page() {
                 <div className="text-sm text-gray-500 mb-6 text-left">
                   {plan.note}
                 </div>
-
-                {/* Button ke Dashboard */}
                 <button
                   onClick={() => handleChoosePlan(plan.name)}
                   className={`${plan.buttonColor} text-white font-medium px-4 py-2 rounded-md w-full shadow`}
                 >
-                  {plan.name === "Wean Free" ? "Start" : "Start"}
+                  Choose {plan.name}
                 </button>
               </div>
-
               <div className="mt-8 text-left">
                 <p className="font-semibold mb-2 text-black">Benefits:</p>
                 <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600">
@@ -128,7 +125,6 @@ function Page() {
           ))}
         </div>
       </main>
-
       <Footer />
     </div>
   );
