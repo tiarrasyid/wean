@@ -4,12 +4,11 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { Upload, AlertCircle } from "lucide-react";
 import { useRef, useState, FormEvent } from "react";
-import { useRouter } from "next/navigation"; // Import from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // --- New State ---
   const [url, setUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -21,7 +20,6 @@ export default function Home() {
     }
   };
 
-  // --- New Submit Handler ---
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
@@ -34,7 +32,7 @@ export default function Home() {
     }
 
     try {
-      // Call your Python API
+      // Panggil Python API
       const response = await fetch("http://127.0.0.1:5000/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -47,13 +45,18 @@ export default function Home() {
         throw new Error(data.error || "Something went wrong on the server.");
       }
 
-      // 1. Save the analysis data to session storage
+      // 1. Simpan data analisis ke session storage
       sessionStorage.setItem("analysisData", JSON.stringify(data));
 
-      // 2. Navigate to the clean /results URL
+      // 2. Pindah ke halaman results
       router.push("/results");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      // PERBAIKAN DI SINI: Hapus : any dan gunakan pengecekan tipe
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unexpected error occurred.");
+      }
       setIsLoading(false);
     }
   };
@@ -75,7 +78,7 @@ export default function Home() {
             value speed and quality.
           </p>
 
-          {/* --- Modified Form --- */}
+          {/* Form */}
           <form
             onSubmit={handleSubmit}
             className="flex flex-col sm:flex-row gap-3 w-full max-w-xl mx-auto md:mx-0"
@@ -106,7 +109,6 @@ export default function Home() {
                 onChange={(e) => {
                   if (e.target.files && e.target.files.length > 0) {
                     console.log("File uploaded:", e.target.files[0].name);
-                    // You could add file processing logic here later
                   }
                 }}
               />
@@ -120,9 +122,8 @@ export default function Home() {
               {isLoading ? "Analyzing..." : "Analyze Now"}
             </button>
           </form>
-          {/* --- End Modified Form --- */}
 
-          {/* --- New Error Message --- */}
+          {/* Error Message */}
           {error && (
             <div className="mt-4 flex items-center gap-2 text-red-300 p-2 bg-red-900/30 rounded-md max-w-xl mx-auto md:mx-0">
               <AlertCircle size={18} />
@@ -145,12 +146,11 @@ export default function Home() {
 
       {/* Features */}
       <section className="px-8 md:px-16 py-20 text-left">
-        {/* ... (rest of your page is unchanged) ... */}
         <h2 className="text-3xl font-semibold mb-12 text-center text-gray-900">
           Powerful Features, Made for Developers
         </h2>
         <div className="grid md:grid-cols-3 gap-10">
-          {/* Feature Card */}
+          {/* Feature Card 1 */}
           <div className="bg-white shadow-md rounded-xl p-8 hover:shadow-xl transition transform hover:-translate-y-1">
             <Image
               src="/assets/codeanalysis.svg"
@@ -167,6 +167,7 @@ export default function Home() {
             </p>
           </div>
 
+          {/* Feature Card 2 */}
           <div className="bg-white shadow-md rounded-xl p-8 hover:shadow-xl transition transform hover:-translate-y-1">
             <Image
               src="/assets/automation.svg"
@@ -183,6 +184,7 @@ export default function Home() {
             </p>
           </div>
 
+          {/* Feature Card 3 */}
           <div className="bg-white shadow-md rounded-xl p-8 hover:shadow-xl transition transform hover:-translate-y-1">
             <Image
               src="/assets/progresstrack.svg"

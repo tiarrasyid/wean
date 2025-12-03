@@ -24,7 +24,13 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${poppins.className} antialiased`}>{children}</body>
+        {/* PERBAIKAN DI SINI: Tambahkan suppressHydrationWarning */}
+        <body
+          className={`${poppins.className} antialiased`}
+          suppressHydrationWarning={true}
+        >
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );
