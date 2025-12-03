@@ -51,7 +51,6 @@ export default function Home() {
       // 2. Pindah ke halaman results
       router.push("/results");
     } catch (err) {
-      // PERBAIKAN DI SINI: Hapus : any dan gunakan pengecekan tipe
       if (err instanceof Error) {
         setError(err.message);
       } else {
